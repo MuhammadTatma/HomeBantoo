@@ -10,6 +10,7 @@ import InventoryList from './components/InventoryList';
 import ExpiringSoonList from './components/ExpiringSoonList';
 import Login from './components/Login';
 import Layout from './components/Layouts';
+import Signup from './components/Signup';
 
 
 axios.defaults.baseURL = 'http://localhost:4000';
@@ -27,6 +28,7 @@ const App = () => {
               <Route path="/expiring-soon-list" element={<ExpiringSoonList />} />
             </Route>
             <Route path='/login' element={<Login />} />
+            <Route path='/signup' element={<Signup />} />
           </Routes>
         </div>
       </Router>
