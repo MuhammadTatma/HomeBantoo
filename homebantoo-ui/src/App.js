@@ -8,6 +8,8 @@ import Home from './components/Home';
 import AddInventoryItem from './components/AddInventoryItem';
 import InventoryList from './components/InventoryList';
 import ExpiringSoonList from './components/ExpiringSoonList';
+import Login from './components/Login';
+import Layout from './components/Layouts';
 
 
 axios.defaults.baseURL = 'http://localhost:4000';
@@ -17,13 +19,14 @@ const App = () => {
     <ChakraProvider> 
       <Router>
         <div>
-          <Header />
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/add-inventory" element={<AddInventoryItem />} />
-            <Route path="/inventory-list" element={<InventoryList />} />
-            <Route path="/expiring-soon-list" element={<ExpiringSoonList />} />
-          
+            <Route element={ <Layout/> }>
+              <Route path="/" element={<Home />} />
+              <Route path="/add-inventory" element={<AddInventoryItem />} />
+              <Route path="/inventory-list" element={<InventoryList />} />
+              <Route path="/expiring-soon-list" element={<ExpiringSoonList />} />
+            </Route>
+            <Route path='/login' element={<Login />} />
           </Routes>
         </div>
       </Router>
