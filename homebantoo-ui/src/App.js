@@ -9,29 +9,32 @@ import AddInventoryItem from './components/AddInventoryItem';
 import InventoryList from './components/InventoryList';
 import ExpiringSoonList from './components/ExpiringSoonList';
 import Login from './components/Login';
-import Layout from './components/Layouts';
+import ProtectedLayout from './components/ProtectedLayouts';
 import Signup from './components/Signup';
+import { AuthContextProvider } from './firebase/authservice';
 
 
 axios.defaults.baseURL = 'http://localhost:4000';
 
 const App = () => {
   return (
-    <ChakraProvider> 
-      <Router>
-        <div>
-          <Routes>
-            <Route element={ <Layout/> }>
-              <Route path="/" element={<Home />} />
-              <Route path="/add-inventory" element={<AddInventoryItem />} />
-              <Route path="/inventory-list" element={<InventoryList />} />
-              <Route path="/expiring-soon-list" element={<ExpiringSoonList />} />
-            </Route>
-            <Route path='/login' element={<Login />} />
-            <Route path='/signup' element={<Signup />} />
-          </Routes>
-        </div>
-      </Router>
+    <ChakraProvider>
+      <AuthContextProvider>
+        <Router>
+          <div>
+            <Routes>
+              <Route element={ <ProtectedLayout/> }>
+                <Route path="/" element={<Home />} />
+                <Route path="/add-inventory" element={<AddInventoryItem />} />
+                <Route path="/inventory-list" element={<InventoryList />} />
+                <Route path="/expiring-soon-list" element={<ExpiringSoonList />} />
+              </Route>
+              <Route path='/login' element={<Login />} />
+              <Route path='/signup' element={<Signup />} />
+            </Routes>
+          </div>
+        </Router>
+      </AuthContextProvider>
     </ChakraProvider> 
   );
 };
