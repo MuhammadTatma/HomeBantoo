@@ -13,8 +13,8 @@
     "axios": "^1.6.2",
     "cors": "^2.8.5",
     "express": "^4.18.2",
+    "firebase": "^10.6.0",
     "mongoose": "^8.0.1"
   },
   "proxy": "http://localhost:4000"
-  
 }
