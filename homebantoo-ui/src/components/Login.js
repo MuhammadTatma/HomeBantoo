@@ -19,6 +19,8 @@ import { useNavigate, Navigate } from 'react-router-dom'
 import { signInWithPopup, signInWithEmailAndPassword } from 'firebase/auth'
 import { useGetUserInfo } from '../hooks/useGetUserInfo'
 import { auth, provider } from '../firebase/firebase-config'
+import { setDoc, doc } from 'firebase/firestore'
+import { db } from '../firebase/firebase-config'
 
 export default function Login() {
   const navigate = useNavigate();
@@ -36,6 +38,7 @@ export default function Login() {
     })
     try{
       const results = await signInWithPopup(auth, provider);
+      const userDb = await setDoc(doc(db, 'users', results.user.uid), {username: results.user.displayName,email: results.user.email,preferences: [],})
       const authInfo = {
         userID: results.user.uid,
         username: results.user.displayName,
