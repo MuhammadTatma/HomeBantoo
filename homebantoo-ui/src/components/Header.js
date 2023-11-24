@@ -1,16 +1,20 @@
 import React from 'react';
+import { Flex,Text, Button, Box, Heading, Link as ChakraLink, Spacer } from '@chakra-ui/react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Flex, Text, Button, Box, Heading, Link as ChakraLink, Spacer } from '@chakra-ui/react';
-import { UserAuth } from '../firebase/authservice';
+import { signOut } from 'firebase/auth';
+import { useGetUserInfo } from '../hooks/useGetUserInfo';
+
+import { auth } from '../firebase/firebase-config';
 
 
 const Header = () => {
-  const {user, logout} = UserAuth()
+  const {email} = useGetUserInfo();
   const navigate = useNavigate();
 
   const handleLogout = async () => {
     try{
-      await logout()
+      await signOut(auth)
+      localStorage.clear();
       navigate('/login')
       console.log('logged out');
     }catch(e){
@@ -67,7 +71,7 @@ const Header = () => {
         <ChakraLink as={Link} to="/settings"mr={4}>
           Settings
         </ChakraLink>
-        <Text mr={4}>{user && user.email}</Text>
+        <Text mr={4}>{email}</Text>
         <Button onClick={handleLogout} mr={4} colorScheme='teal' variant='outline'>
           logout
         </Button>

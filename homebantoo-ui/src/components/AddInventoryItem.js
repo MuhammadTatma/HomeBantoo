@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
 import { Input, Button, Heading, FormControl, FormLabel, Stack } from '@chakra-ui/react';
-import axios from 'axios';
+import { useAddInventory } from '../hooks/useAddInventory';
 
 const AddInventoryItem = () => {
-  const [itemName, setItemName] = useState('');
+  const [name, setItemName] = useState('');
   const [quantity, setQuantity] = useState(0);
-  const [expirationDate, setExpirationDate] = useState('');
+  const [expired, setExpirationDate] = useState(new Date());
+
+  const { addInventory } = useAddInventory();
 
   const handleAddItem = async () => {
     try {
-      await axios.post('/api/inventory', { name: itemName, quantity, expirationDate });
-      window.location.reload();
+      addInventory({name, quantity, expired})
+      alert('berhasil');
     } catch (error) {
-      console.error('Error adding inventory item:', error);
+      alert('Error adding inventory item:', error);
     }
   };
 
@@ -23,7 +25,7 @@ const AddInventoryItem = () => {
         <FormLabel>Item Name:</FormLabel>
         <Input
           type="text"
-          value={itemName}
+          value={name}
           onChange={(e) => setItemName(e.target.value)}
           variant="filled"
         />
@@ -40,8 +42,9 @@ const AddInventoryItem = () => {
       <FormControl>
         <FormLabel>Expiration Date:</FormLabel>
         <Input
+          placeholder="Select Date and Time"
+          size="md"
           type="date"
-          value={expirationDate}
           onChange={(e) => setExpirationDate(e.target.value)}
           variant="filled"
         />

@@ -14,8 +14,9 @@ import {
   Link,
 } from '@chakra-ui/react'
 import { useState } from 'react'
-import { UserAuth } from '../firebase/authservice'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Navigate } from 'react-router-dom'
+import { useGetUserInfo } from '../hooks/useGetUserInfo'
+import { auth, provider } from '../firebase/firebase-config'
 
 export default function Signup() {
   const [username, setUsername] = useState('')
@@ -26,14 +27,14 @@ export default function Signup() {
   const [registerSpinner, setRegisterSpinner] = useState(false);
   const [googleSpinner, setGoogleSpinner] = useState(false);
 
-  const { createUser } = UserAuth();
   const navigate = useNavigate();
+  const { isAuth } = useGetUserInfo();
 
   const handleSubmit = async () => {
     setError('');
     setRegisterSpinner(true);
     try{
-      await createUser(email, password);
+      // await createUser(email, password);
       setRegisterSpinner(false)
       navigate('/');
     }catch(e){
@@ -42,13 +43,19 @@ export default function Signup() {
     }
   }
 
+  const fColor = useColorModeValue('gray.50', 'gray.800');
+  const sColor = useColorModeValue('white', 'gray.700');
+
+  if (isAuth) {
+    return <Navigate to="/" />;
+  }
   return (
-    <Flex minH={'100vh'} align={'center'} justify={'center'} bg={useColorModeValue('gray.50', 'gray.800')}>
+    <Flex minH={'100vh'} align={'center'} justify={'center'} bg={fColor}>
       <Stack spacing={8} mx={'auto'} maxW={'lg'} w={['sm','md']} py={12} px={6}>
         <Stack align={'center'}>
           <Heading fontSize={'xl'}>Hello! Register to get started</Heading>
         </Stack>
-        <Box rounded={'lg'} bg={useColorModeValue('white', 'gray.700')} boxShadow={'lg'} p={8}>
+        <Box rounded={'lg'} bg={sColor} boxShadow={'lg'} p={8}>
           <Stack spacing={4}>
             <FormControl id="username" isRequired>
               <FormLabel>Username</FormLabel>
@@ -67,13 +74,10 @@ export default function Signup() {
               <Input type="password" onChange={(e) => setConfirmPassword(e.target.value)} />
             </FormControl>
             <Stack spacing={10}>
-
-
               <Stack mt={3} spacing={3} >
                 <Button isLoading={registerSpinner}  type='button'  bg={'#D80202'} color={'white'} _hover={{ bg: '#FF3D00', }} onClick={handleSubmit}>
                   Register
                 </Button>
-                
                 <Text fontSize='sm' as='b' >Or Register With</Text>
                 <Button isLoading={googleSpinner} w={'full'} variant={'outline'} >
                   <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="25" height="25" viewBox="0 0 48 48">
