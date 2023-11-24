@@ -1,5 +1,5 @@
 import React from 'react';
-import { Flex,Text, Button, Box, Heading, Link as ChakraLink, Spacer } from '@chakra-ui/react';
+import { Flex,Text, Button, Box, Heading, Link as ChakraLink, Spacer ,} from '@chakra-ui/react';
 import { Link, useNavigate } from 'react-router-dom';
 import { signOut } from 'firebase/auth';
 import { useGetUserInfo } from '../hooks/useGetUserInfo';
@@ -68,10 +68,12 @@ const Header = () => {
         <ChakraLink as={Link} to="/profile" mr={4}>
           Profile
         </ChakraLink>
-        <ChakraLink as={Link} to="/settings"mr={4}>
-          Settings
-        </ChakraLink>
-        <Text mr={4}>{email}</Text>
+        <Flex>
+          <Box ml='2'>
+          <Text mr={4}>{email}</Text>
+          </Box>
+        </Flex>
+        
         <Button onClick={handleLogout} mr={4} colorScheme='teal' variant='outline'>
           logout
         </Button>
