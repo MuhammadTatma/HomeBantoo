@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Input, Button, Heading, FormControl, FormLabel, Stack } from '@chakra-ui/react';
+import { Input, Button, Heading, FormControl, FormLabel, Stack ,HStack, Container} from '@chakra-ui/react';
 import { useAddInventory } from '../hooks/useAddInventory';
 
 const AddInventoryItem = () => {
@@ -19,40 +19,51 @@ const AddInventoryItem = () => {
   };
 
   return (
-    <Stack spacing={4} align="center">
-      <Heading size="lg">Add Inventory Item</Heading>
-      <FormControl>
-        <FormLabel>Item Name:</FormLabel>
-        <Input
-          type="text"
-          value={name}
-          onChange={(e) => setItemName(e.target.value)}
-          variant="filled"
-        />
-      </FormControl>
-      <FormControl>
-        <FormLabel>Quantity:</FormLabel>
-        <Input
-          type="number"
-          value={quantity}
-          onChange={(e) => setQuantity(e.target.value)}
-          variant="filled"
-        />
-      </FormControl>
-      <FormControl>
-        <FormLabel>Expiration Date:</FormLabel>
-        <Input
-          placeholder="Select Date and Time"
-          size="md"
-          type="date"
-          onChange={(e) => setExpirationDate(e.target.value)}
-          variant="filled"
-        />
-      </FormControl>
-      <Button onClick={handleAddItem} colorScheme="teal">
-        Add Item
-      </Button>
-    </Stack>
+    <Container centerContent>
+      <Stack spacing={6} align="center" width="90%">
+        <Heading size="lg">Add Inventory Item</Heading>
+        <FormControl isRequired>
+          <HStack>
+            <FormLabel >Item Name:</FormLabel>
+            <Input
+              type="text"
+              value={name}
+              onChange={(e) => setItemName(e.target.value)}
+              variant="filled"
+              isFullWidth
+            />
+          </HStack>
+        </FormControl>
+        <FormControl isRequired>
+          <HStack>
+            <FormLabel>Quantity:</FormLabel>
+            <Input
+              type="number"
+              value={quantity}
+              onChange={(e) => setQuantity(e.target.value)}
+              variant="filled"
+              isFullWidth
+            />
+          </HStack>
+        </FormControl>
+        <FormControl isRequired>
+          <HStack>
+            <FormLabel>Expired Date:</FormLabel>
+            <Input
+              placeholder="Select Date and Time"
+              size="md"
+              type="date"
+              onChange={(e) => setExpirationDate(e.target.value)}
+              variant="filled"
+              isFullWidth
+            />
+          </HStack>
+        </FormControl>
+        <Button onClick={handleAddItem} colorScheme="teal" isFullWidth>
+          Add Item
+        </Button>
+      </Stack>
+    </Container>
   );
 };
 
