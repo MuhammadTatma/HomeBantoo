@@ -36,6 +36,7 @@ const Header = () => {
       width="100%" /* Set width to 100% */
       mx="auto" /* Center the menu horizontally */
     >
+      
       <Flex align="center">
         <Heading as="h1" size="lg">
           <Link to="/" style={{ textDecoration: 'none', color: '#D80202' }}>
@@ -74,7 +75,7 @@ const Header = () => {
           </Box>
         </Flex>
         
-        <Button onClick={handleLogout} mr={4} colorScheme='teal' variant='outline'>
+        <Button onClick={handleLogout} mr={4} colorScheme='red' variant='outline'>
           logout
         </Button>
       </Flex>

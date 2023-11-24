@@ -48,7 +48,7 @@ const AddInventoryItem = () => {
         </FormControl>
         <FormControl isRequired>
           <HStack>
-            <FormLabel>Expired Date:</FormLabel>
+            <FormLabel>Expired ate:</FormLabel>
             <Input
               placeholder="Select Date and Time"
               size="md"
@@ -59,7 +59,7 @@ const AddInventoryItem = () => {
             />
           </HStack>
         </FormControl>
-        <Button onClick={handleAddItem} colorScheme="teal" isFullWidth>
+        <Button onClick={handleAddItem} colorScheme="red" isFullWidth>
           Add Item
         </Button>
       </Stack>
