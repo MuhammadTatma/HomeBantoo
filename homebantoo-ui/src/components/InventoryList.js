@@ -16,23 +16,32 @@ import {
   AlertDialogHeader,
   AlertDialogCloseButton,
   AlertDialogBody,
-  AlertDialogFooter,
+  AlertDialogFooter, useDisclosure, Modal, ModalOverlay, FormControl, ModalContent, ModalHeader, ModalCloseButton, ModalBody, Input, FormLabel, ModalFooter,
   Flex,
   Spinner, // Import Spinner from Chakra UI
 } from '@chakra-ui/react';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { useGetInventory } from '../hooks/useGetInventory';
-import { useDeleteInventory } from '../hooks/useDeleteInventory';
+import { useDeleteInventory, useUpdateItem } from '../hooks/useDeleteInventory';
 import { useRef } from 'react';
 import { RecommendationList } from './RecommendationList';
-import { daysUntillExpired } from '../utils/utils';
+import { updateDoc, Doc } from 'firebase/firestore';
+import { db } from '../firebase/firebase-config';
+
 
 const InventoryList = () => {
   const { inventory } = useGetInventory();
   const { deleteInventoryItem } = useDeleteInventory();
+  const { updateItem } = useUpdateItem();
   const [deleteItemId, setDeleteItemId] = useState(null);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [editItem, setEditItem]= useState({});
   const [isLoading, setIsLoading] = useState(true); // New state for loading
+  const [itemName, setItemName] = useState('');
+  const [quantity, setQuantity] = useState('');
+  const [expired, setExpired] = useState('');
+
 
   useEffect(() => {
     // Simulating an asynchronous operation (e.g., fetching recommendations)
@@ -45,6 +54,8 @@ const InventoryList = () => {
     fetchData();
   }, []); // Empty dependency array ensures this effect runs once on mount
 
+
+
   const onCloseAlert = () => {
     setIsAlertOpen(false);
   };
@@ -56,14 +67,27 @@ const InventoryList = () => {
     }
   };
 
+const onEditConfirmed = () => {
+  try{
+    updateItem(editItem.id, itemName, quantity, expired)
+    alert('berhasil')
+  }catch(e){
+    alert(e);
+  }
+  onClose();
+}
+
+
+
   const handleDelete = (id) => {
     setDeleteItemId(id);
     setIsAlertOpen(true);
   };
 
-  const handleUpdate = (id) => {
-    // Implement your update logic here
-    console.log(`Update item with ID: ${id}`);
+  const handleUpdate = (item) => {
+    setEditItem(item);
+    console.log(editItem);
+    onOpen();
   };
 
   const cancelRef = useRef();
@@ -101,7 +125,7 @@ const InventoryList = () => {
                     <IconButton
                       icon={<FaEdit />}
                       colorScheme="teal"
-                      onClick={() => handleUpdate(item.id)}
+                      onClick={() => handleUpdate(item)}
                       aria-label="Edit"
                       mr={2}
                     />
@@ -144,6 +168,46 @@ const InventoryList = () => {
             </AlertDialogContent>
           </AlertDialogOverlay>
         </AlertDialog>
+
+        {/* Edit Modal */}
+        <Modal
+          isOpen={isOpen}
+          onClose={onClose}
+        >
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>Edit Item</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody pb={6}>
+              <FormControl>
+                <FormLabel>Name</FormLabel>
+                <Input onChange={(e) => {setItemName(e.target.value)}} placeholder='First name' defaultValue={editItem?.name} />
+              </FormControl>
+
+              <FormControl mt={4}>
+                <FormLabel>Quantity</FormLabel>
+                <Input onChange={(e) => {setQuantity(e.target.value)}} type="number" placeholder={0} defaultValue={editItem?.quantity} />
+              </FormControl>
+
+              <FormControl>
+                <FormLabel width={'110px'}>Expired Date:</FormLabel>
+                <Input                 
+                  onChange={(e) => {setExpired(e.target.value)}} 
+                  placeholder="Select Date and Time"
+                  type="date"
+                />
+              </FormControl>
+
+            </ModalBody>
+
+            <ModalFooter>
+              <Button onClick={onEditConfirmed} colorScheme='blue' mr={3}>
+                Save
+              </Button>
+              <Button onClick={onClose}>Cancel</Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
       </Box>
       <RecommendationList />
     </Flex>

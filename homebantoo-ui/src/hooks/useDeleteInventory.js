@@ -1,4 +1,4 @@
-import { doc, deleteDoc } from "firebase/firestore";
+import { doc, deleteDoc, updateDoc, Timestamp } from "firebase/firestore";
 import { db } from "../firebase/firebase-config";
 import { useGetUserInfo } from "./useGetUserInfo";
 
@@ -10,4 +10,15 @@ export const useDeleteInventory = () => {
     await deleteDoc(InventoryDocumentRef);
   };
   return { deleteInventoryItem };
+}
+
+export const useUpdateItem = () => {
+  const { userID } = useGetUserInfo();
+
+  const updateItem = async (docId, name, quantity, expired) => {
+    const InventoryDocumentRef = doc(db, 'users',userID, 'inventory', docId);
+    await updateDoc(InventoryDocumentRef, {name: name, quantity: quantity,  expired : Timestamp.fromDate(new Date(expired))} );
+  };
+
+  return { updateItem };
 }
