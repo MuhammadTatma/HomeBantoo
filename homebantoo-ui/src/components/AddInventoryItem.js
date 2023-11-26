@@ -24,7 +24,7 @@ const AddInventoryItem = () => {
         <Heading size="lg" mt="5">Add Inventory Item</Heading>
         <FormControl isRequired>
           <HStack>
-            <FormLabel >Item Name:</FormLabel>
+            <FormLabel width={'110px'}>Item Name:</FormLabel>
             <Input
               type="text"
               value={name}
@@ -38,7 +38,7 @@ const AddInventoryItem = () => {
         </FormControl>
         <FormControl isRequired>
           <HStack>
-            <FormLabel>Quantity:</FormLabel>
+            <FormLabel width={'110px'}>Quantity:</FormLabel>
             <Input
               type="number"
               size="md"
@@ -52,7 +52,7 @@ const AddInventoryItem = () => {
         </FormControl>
         <FormControl isRequired>
           <HStack>
-            <FormLabel>Expired Date:</FormLabel>
+            <FormLabel width={'110px'}>Expired Date:</FormLabel>
             <Input
               placeholder="Select Date and Time"
               size="md"
