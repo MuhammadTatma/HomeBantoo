@@ -17,13 +17,14 @@ import {
   AlertDialogCloseButton,
   AlertDialogBody,
   AlertDialogFooter,
-} from '@chakra-ui/react';
+  Flex
+  } from '@chakra-ui/react';
 import { FaEdit, FaTrash } from 'react-icons/fa';
-import { InventoryItem } from './InventoryItem';
 import { useGetInventory } from '../hooks/useGetInventory';
 import { useDeleteInventory } from '../hooks/useDeleteInventory';
-import { daysUntillExpired } from '../utils/utils';
 import { useRef, useState } from 'react';
+import { RecommendationList } from './RecommendationList';
+import {daysUntillExpired} from '../utils/utils'
 
 const InventoryList = () => {
   const { inventory } = useGetInventory();
@@ -52,75 +53,80 @@ const InventoryList = () => {
     console.log(`Update item with ID: ${id}`);
   };
 
+  
+
   const cancelRef = useRef();
 
   return (
-    <Box>
-      <Heading as="h2" size="lg" mb={4}>
-        Inventory List
-      </Heading>
-      <Table variant="striped" colorScheme="teal">
-        <Thead>
-          <Tr>
-            <Th>Item Name</Th>
-            <Th>Quantity</Th>
-            <Th>Expiration Date</Th>
-            <Th>Actions</Th>
-          </Tr>
-        </Thead>
-        <Tbody>
-          {inventory.map((item) => (
-            <Tr key={item.id}>
-              <Td>{item.name}</Td>
-              <Td>{item.quantity}</Td>
-              <Td>{item.expired}</Td>
-              <Td>
-                <IconButton
-                  icon={<FaEdit />}
-                  colorScheme="teal"
-                  onClick={() => handleUpdate(item.id)}
-                  aria-label="Edit"
-                  mr={2}
-                />
-                <IconButton
-                  icon={<FaTrash />}
-                  colorScheme="red"
-                  onClick={() => handleDelete(item.id)}
-                  aria-label="Delete"
-                />
-              </Td>
+    <Flex gap={4} direction={['column', 'row']}>
+      <Box minW={'60%'}>
+        <Heading as="h2" size="lg" mb={4}>
+          Inventory List
+        </Heading>
+        <Table variant="striped" colorScheme="teal">
+          <Thead>
+            <Tr>
+              <Th>Item Name</Th>
+              <Th>Quantity</Th>
+              <Th>Expiration Date</Th>
+              <Th>Actions</Th>
             </Tr>
-          ))}
-        </Tbody>
-      </Table>
+          </Thead>
+          <Tbody>
+            {inventory.map((item) => (
+              <Tr key={item.id}>
+                <Td>{item.name}</Td>
+                <Td>{item.quantity}</Td>
+                <Td>{item.expired}</Td>
+                <Td>
+                  <IconButton
+                    icon={<FaEdit />}
+                    colorScheme="teal"
+                    onClick={() => handleUpdate(item.id)}
+                    aria-label="Edit"
+                    mr={2}
+                  />
+                  <IconButton
+                    icon={<FaTrash />}
+                    colorScheme="red"
+                    onClick={() => handleDelete(item.id)}
+                    aria-label="Delete"
+                  />
+                </Td>
+              </Tr>
+            ))}
+          </Tbody>
+        </Table>
 
-      {/* Delete Confirmation Alert */}
-      <AlertDialog
-        isOpen={isAlertOpen}
-        leastDestructiveRef={cancelRef}
-        onClose={onCloseAlert}
-      >
-        <AlertDialogOverlay>
-          <AlertDialogContent>
-            <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              Delete Item
-            </AlertDialogHeader>
-            <AlertDialogCloseButton />
-            <AlertDialogBody>
-              Are you sure you want to delete this item?
-            </AlertDialogBody>
-            <AlertDialogFooter>
-              <Button ref={cancelRef} onClick={onCloseAlert}>
-                Cancel
-              </Button>
-              <Button colorScheme="red" onClick={onDeleteConfirmed} ml={3}>
-                Delete
-              </Button>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialogOverlay>
-      </AlertDialog>
-    </Box>
+        {/* Delete Confirmation Alert */}
+        <AlertDialog
+          isOpen={isAlertOpen}
+          leastDestructiveRef={cancelRef}
+          onClose={onCloseAlert}
+        >
+          <AlertDialogOverlay>
+            <AlertDialogContent>
+              <AlertDialogHeader fontSize="lg" fontWeight="bold">
+                Delete Item
+              </AlertDialogHeader>
+              <AlertDialogCloseButton />
+              <AlertDialogBody>
+                Are you sure you want to delete this item?
+              </AlertDialogBody>
+              <AlertDialogFooter>
+                <Button ref={cancelRef} onClick={onCloseAlert}>
+                  Cancel
+                </Button>
+                <Button colorScheme="red" onClick={onDeleteConfirmed} ml={3}>
+                  Delete
+                </Button>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialogOverlay>
+        </AlertDialog>
+      </Box>
+      <RecommendationList />
+    </Flex>
   );
 };
 

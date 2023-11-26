@@ -19,7 +19,7 @@ import { useNavigate, Navigate } from 'react-router-dom'
 import { signInWithPopup, signInWithEmailAndPassword } from 'firebase/auth'
 import { useGetUserInfo } from '../hooks/useGetUserInfo'
 import { auth, provider } from '../firebase/firebase-config'
-import { setDoc, doc } from 'firebase/firestore'
+import { setDoc, doc, getDoc } from 'firebase/firestore'
 import { db } from '../firebase/firebase-config'
 
 export default function Login() {
@@ -38,12 +38,21 @@ export default function Login() {
     })
     try{
       const results = await signInWithPopup(auth, provider);
-      const userDb = await setDoc(doc(db, 'users', results.user.uid), {username: results.user.displayName,email: results.user.email,preferences: [],})
+      const userDoc = await getDoc(doc(db, 'users', results.user.uid))
+      let pref = {'low-sugar': false, 'no-oil-added': false, 'low-carb': false, 'low-fat': false, 'vegan': false}
+      if (userDoc.exists()) {
+        console.log("Document data:", userDoc.data());
+        pref = userDoc.data().preferences;
+      } else {
+        await setDoc(doc(db, 'users', results.user.uid), {username: results.user.displayName,email: results.user.email,preferences: pref,})
+        console.log("Create new user document");
+      }
       const authInfo = {
         userID: results.user.uid,
         username: results.user.displayName,
         email: results.user.email,
         isAuth: true,
+        preferences: pref
       };
       localStorage.setItem("auth", JSON.stringify(authInfo));
       setGoogleSpinner(false);
@@ -60,20 +69,21 @@ export default function Login() {
     setSignInSpinner(true);
     try{
       const results = await signInWithEmailAndPassword(auth, email, password);
+      const userDoc = await getDoc(doc(db, 'users', results.user.uid));
       const authInfo = {
         userID: results.user.uid,
-        username: results.user.displayName,
+        username: userDoc.data().username,
         email: results.user.email,
         isAuth: true,
+        preferences: userDoc.data().preferences
       };
       localStorage.setItem("auth", JSON.stringify(authInfo));
       setSignInSpinner(false);
       navigate('/');
     }catch(e){
+      alert(e.message);
+      console.log(e);
       setSignInSpinner(false);
-      setError(e.message);
-      alert(error);
-      console.log(error);
 
     }
   }
