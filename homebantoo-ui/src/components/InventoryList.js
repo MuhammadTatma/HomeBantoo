@@ -1,23 +1,4 @@
-import React from 'react';
-import {
-  Box,
-  Button,
-  Heading,
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
-  IconButton,
-  AlertDialog,
-  AlertDialogOverlay,
-  AlertDialogContent,
-  AlertDialogHeader,
-  AlertDialogCloseButton,
-  AlertDialogBody,
-  AlertDialogFooter,
-} from '@chakra-ui/react';
+import React from 'react';import {Box,Button,Heading,Table,Thead,Tbody,Tr,Th,Td,IconButton,AlertDialog,AlertDialogOverlay,AlertDialogContent,AlertDialogHeader,AlertDialogCloseButton,AlertDialogBody,AlertDialogFooter,} from '@chakra-ui/react';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { InventoryItem } from './InventoryItem';
 import { useGetInventory } from '../hooks/useGetInventory';
@@ -56,8 +37,8 @@ const InventoryList = () => {
 
   return (
     <Box>
-      <Heading as="h2" size="lg" mb={4}>
-        Inventory List
+      <Heading as="h2" size="lg" mb={4} mt="5" mr={20}>
+      Inventory List
       </Heading>
       <Table variant="striped" colorScheme="teal">
         <Thead>

@@ -20,16 +20,17 @@ const AddInventoryItem = () => {
 
   return (
     <Container centerContent>
-      <Stack spacing={6} align="center" width="90%">
-        <Heading size="lg">Add Inventory Item</Heading>
+      <Stack spacing={6} align="center" width="90%" >
+        <Heading size="lg" mt="5">Add Inventory Item</Heading>
         <FormControl isRequired>
           <HStack>
-            <FormLabel >Item Name:</FormLabel>
+            <FormLabel >ItemName:</FormLabel>
             <Input
               type="text"
               value={name}
               onChange={(e) => setItemName(e.target.value)}
               variant="filled"
+              size="md"
               isFullWidth
             />
           </HStack>
@@ -39,6 +40,7 @@ const AddInventoryItem = () => {
             <FormLabel>Quantity:</FormLabel>
             <Input
               type="number"
+              size="md"
               value={quantity}
               onChange={(e) => setQuantity(e.target.value)}
               variant="filled"
@@ -48,7 +50,7 @@ const AddInventoryItem = () => {
         </FormControl>
         <FormControl isRequired>
           <HStack>
-            <FormLabel>Expired ate:</FormLabel>
+            <FormLabel>Expiredate:</FormLabel>
             <Input
               placeholder="Select Date and Time"
               size="md"

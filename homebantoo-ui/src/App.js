@@ -10,6 +10,7 @@ import ExpiringSoonList from './components/ExpiringSoonList';
 import Login from './components/Login';
 import ProtectedLayout from './components/ProtectedLayouts';
 import Signup from './components/Signup';
+import Profile from './components/Profile';
 
 
 
@@ -26,6 +27,7 @@ const App = () => {
                 <Route path="/add-inventory" element={<AddInventoryItem />} />
                 <Route path="/inventory-list" element={<InventoryList />} />
                 <Route path="/expiring-soon-list" element={<ExpiringSoonList />} />
+                <Route path="/profile" element={<Profile />} />
               </Route>
               <Route path='/login' element={<Login />} />
               <Route path='/signup' element={<Signup />} />

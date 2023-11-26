@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Box, Button, Heading, List, Text, ListItem } from '@chakra-ui/react';
+import { Box, Button, Heading,Table, Thead, Tbody, Tr, Th, Td,Center } from '@chakra-ui/react';
 import { Recipe } from './Recipe';
 import { useGetInventory } from '../hooks/useGetInventory';
 import { daysUntillExpired } from '../utils/utils';
@@ -58,22 +58,34 @@ const ExpiringSoonList = () => {
     //     ))}
     //   </List>
     // </Box>
+    <Center>
     <Box>
-    <Heading as="h2" size="lg" mb={4}>
-      Expiring Soon
-    </Heading>
-    <List>
-      {inventory.map(item => {
-        if(daysUntillExpired(item.expired) <= 3){
-          return (
-            <ListItem key={item.id} mb={2}>
-              {item.name} - Expiration Date: {item.expired}
-            </ListItem>
-          )
-        }
-      } )}
-    </List>
-  </Box>
+      <Heading as="h2" size="lg" mb={4} mt="5">
+        Expiring Soon
+      </Heading>
+      <Table Table variant="striped" colorScheme="red" >
+        <Thead>
+          <Tr>
+            <Th>Name</Th>
+            <Th>Expiration Date</Th>
+          </Tr>
+        </Thead>
+        <Tbody>
+          {inventory.map((item) => {
+            if (daysUntillExpired(item.expired) <= 3) {
+              return (
+                <Tr key={item.id}>
+                  <Td>{item.name}</Td>
+                  <Td>{item.expired}</Td>
+                </Tr>
+              );
+            }
+            return null; // Make sure to return null for items you don't want to render
+          })}
+        </Tbody>
+      </Table>
+    </Box>
+    </Center>
   );
 };
 
