@@ -86,6 +86,9 @@ const onEditConfirmed = () => {
 
   const handleUpdate = (item) => {
     setEditItem(item);
+    setItemName(item.name)
+    setQuantity(item.quantity)
+    setExpired(item.expired)
     console.log(editItem);
     onOpen();
   };
