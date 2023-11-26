@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Box,
   Button,
@@ -18,11 +18,12 @@ import {
   AlertDialogBody,
   AlertDialogFooter,
   Flex,
+  Spinner, // Import Spinner from Chakra UI
 } from '@chakra-ui/react';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { useGetInventory } from '../hooks/useGetInventory';
 import { useDeleteInventory } from '../hooks/useDeleteInventory';
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { RecommendationList } from './RecommendationList';
 import { daysUntillExpired } from '../utils/utils';
 
@@ -31,6 +32,18 @@ const InventoryList = () => {
   const { deleteInventoryItem } = useDeleteInventory();
   const [deleteItemId, setDeleteItemId] = useState(null);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true); // New state for loading
+
+  useEffect(() => {
+    // Simulating an asynchronous operation (e.g., fetching recommendations)
+    const fetchData = async () => {
+      // Assume your fetch operation here
+      await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulating a delay
+      setIsLoading(false);
+    };
+
+    fetchData();
+  }, []); // Empty dependency array ensures this effect runs once on mount
 
   const onCloseAlert = () => {
     setIsAlertOpen(false);
@@ -71,28 +84,37 @@ const InventoryList = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {inventory.map((item) => (
-              <Tr key={item.id}>
-                <Td>{item.name}</Td>
-                <Td>{item.quantity}</Td>
-                <Td>{item.expired}</Td>
-                <Td>
-                  <IconButton
-                    icon={<FaEdit />}
-                    colorScheme="teal"
-                    onClick={() => handleUpdate(item.id)}
-                    aria-label="Edit"
-                    mr={2}
-                  />
-                  <IconButton
-                    icon={<FaTrash />}
-                    colorScheme="red"
-                    onClick={() => handleDelete(item.id)}
-                    aria-label="Delete"
-                  />
+            {isLoading ? ( // Display loading spinner when isLoading is true
+              <Tr>
+                <Td colSpan="4" textAlign="center">
+                  <Spinner size="lg" />
                 </Td>
               </Tr>
-            ))}
+            ) : (
+              // Display inventory items when isLoading is false
+              inventory.map((item) => (
+                <Tr key={item.id}>
+                  <Td>{item.name}</Td>
+                  <Td>{item.quantity}</Td>
+                  <Td>{item.expired}</Td>
+                  <Td>
+                    <IconButton
+                      icon={<FaEdit />}
+                      colorScheme="teal"
+                      onClick={() => handleUpdate(item.id)}
+                      aria-label="Edit"
+                      mr={2}
+                    />
+                    <IconButton
+                      icon={<FaTrash />}
+                      colorScheme="red"
+                      onClick={() => handleDelete(item.id)}
+                      aria-label="Delete"
+                    />
+                  </Td>
+                </Tr>
+              ))
+            )}
           </Tbody>
         </Table>
 
