@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { Box, Button, Heading, Input, Stack, Text } from '@chakra-ui/react'; // Import Chakra UI components
 import { useNavigate } from 'react-router-dom';
 import { Recipe } from './Recipe';
+
 
 const Home = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -42,12 +42,14 @@ const Home = () => {
       backgroundSize="cover"
       backgroundPosition="center"
       backgroundRepeat="no-repeat"
+      rounded={20}
       textAlign="center"
       color="#D80202"
+      mt={2}
       height="70vh"
       boxShadow={isSearch?'':"0px 10px 20px rgba(0, 0, 0, 0.3)"}
     >
-      <Heading as="h1" size="xl" mb="4">
+      <Heading as="h1" size="xl" mb="18" color="white">
         Welcome to Homebantoo!
       </Heading>
       <Box mb="4" display="flex" alignItems="center" justifyContent="center">
@@ -57,7 +59,8 @@ const Home = () => {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           mr="2"
-          w="300px"
+          width="300px"
+          color="black"
         />
         <Button colorScheme="red" onClick={handleSearch}>
           Search
@@ -74,10 +77,10 @@ const Home = () => {
               p={4}
               boxShadow="md"
             >
-              <Heading as="h2" size="md" mb={2}>
+              <Heading as="h2" size="md" mb={2} color="black">
                 {recipe.recipe.label}
               </Heading>
-              <Text mb={2}>Calories: {recipe.recipe.calories.toFixed(2)}</Text>
+              <Text mb={2} color="black">Calories: {recipe.recipe.calories.toFixed(2)}</Text>
               <Recipe
                 key={recipe.recipe.label}
                 title={recipe.recipe.label}

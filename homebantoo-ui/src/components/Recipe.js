@@ -1,6 +1,6 @@
-import { Text, UnorderedList, Card, CardBody,  Heading, Stack, List, ListItem, ListIcon, Image, Divider } from "@chakra-ui/react"
+import { Text, UnorderedList, Card, CardBody,  Heading, Stack,  Image, } from "@chakra-ui/react"
 
-export const Recipe = ({ title, calories, image, ingredients }) => {
+export const Recipe = ({ title, calories, image, ingredients }) =>{
 
   return (
     <Card
@@ -27,11 +27,6 @@ export const Recipe = ({ title, calories, image, ingredients }) => {
         })}
         
       </UnorderedList>
-
-      <Text py='2'>
-        Caffè latte is a coffee beverage of Italian origin made with espresso
-        and steamed milk.
-      </Text>
     </CardBody>
 
     {/* <CardFooter>
