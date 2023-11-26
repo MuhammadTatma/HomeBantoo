@@ -24,7 +24,7 @@ const AddInventoryItem = () => {
         <Heading size="lg" mt="5">Add Inventory Item</Heading>
         <FormControl isRequired>
           <HStack>
-            <FormLabel >ItemName:</FormLabel>
+            <FormLabel >Item Name:</FormLabel>
             <Input
               type="text"
               value={name}
@@ -32,6 +32,7 @@ const AddInventoryItem = () => {
               variant="filled"
               size="md"
               isFullWidth
+              maxW={'250px'}
             />
           </HStack>
         </FormControl>
@@ -45,12 +46,13 @@ const AddInventoryItem = () => {
               onChange={(e) => setQuantity(e.target.value)}
               variant="filled"
               isFullWidth
+              maxW={'250px'}
             />
           </HStack>
         </FormControl>
         <FormControl isRequired>
           <HStack>
-            <FormLabel>Expiredate:</FormLabel>
+            <FormLabel>Expired Date:</FormLabel>
             <Input
               placeholder="Select Date and Time"
               size="md"
@@ -58,6 +60,7 @@ const AddInventoryItem = () => {
               onChange={(e) => setExpirationDate(e.target.value)}
               variant="filled"
               isFullWidth
+              maxW={'250px'}
             />
           </HStack>
         </FormControl>
