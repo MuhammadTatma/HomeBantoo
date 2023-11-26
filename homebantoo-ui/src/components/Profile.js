@@ -155,17 +155,19 @@ export default function Profile() {
         <Stack spacing={6} direction={['column']}>
           <Button onClick={handleSave}
             isLoading={isLoading}
-            bg={'blue.400'}
+            boxShadow={'2xl'}
+            bg={'teal'}
             color={'white'}
             w="full"
             _hover={{
-              bg: 'blue.500',
+              bg: 'teal.500',
             }}>
             Save
           </Button>
           <Button
             onClick={handleLogout}
             bg={'red.400'}
+            boxShadow={'2xl'}
             color={'white'}
             w="full"
             _hover={{

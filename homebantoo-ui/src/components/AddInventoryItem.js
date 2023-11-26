@@ -64,7 +64,7 @@ const AddInventoryItem = () => {
             />
           </HStack>
         </FormControl>
-        <Button onClick={handleAddItem} colorScheme="red" isFullWidth>
+        <Button onClick={handleAddItem} colorScheme="red" isFullWidth boxShadow={'2xl'}>
           Add Item
         </Button>
       </Stack>

@@ -60,7 +60,7 @@ const Home = () => {
           onChange={(e) => setSearchQuery(e.target.value)}
           mr="2"
           width="300px"
-          color="black"
+          color={isSearch? 'black':'red'}
         />
         <Button colorScheme="red" onClick={handleSearch}>
           Search
