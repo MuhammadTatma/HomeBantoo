@@ -17,14 +17,14 @@ import {
   AlertDialogCloseButton,
   AlertDialogBody,
   AlertDialogFooter,
-  Flex
-  } from '@chakra-ui/react';
+  Flex,
+} from '@chakra-ui/react';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { useGetInventory } from '../hooks/useGetInventory';
 import { useDeleteInventory } from '../hooks/useDeleteInventory';
 import { useRef, useState } from 'react';
 import { RecommendationList } from './RecommendationList';
-import {daysUntillExpired} from '../utils/utils'
+import { daysUntillExpired } from '../utils/utils';
 
 const InventoryList = () => {
   const { inventory } = useGetInventory();
@@ -53,13 +53,11 @@ const InventoryList = () => {
     console.log(`Update item with ID: ${id}`);
   };
 
-  
-
   const cancelRef = useRef();
 
   return (
-    <Flex gap={4} direction={['column', 'row']}>
-      <Box minW={'60%'}>
+    <Flex direction={['column', 'row']} wrap="wrap" gap={4}>
+      <Box flex="1" minW={['100%', '60%']} mb={[4, 0]}>
         <Heading as="h2" size="lg" mb={4}>
           Inventory List
         </Heading>
